@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pasarela de Pago</title>
+</head>
+<body>
+    <h1>Generar pago</h1>
+    <form action="/crear-pago" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label for="monto">Monto:</label>
+        <input type="number" name="monto" required>
+        <br>
+        <button type="submit">Pagar</button>
+    </form>
+</body>
+</html>
