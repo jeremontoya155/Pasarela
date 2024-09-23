@@ -1,18 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pasarela de Pago</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Contenedor principal */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Encabezado */
+        h1 {
+            color: #0D47A1;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Estilos del formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            color: #424242;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input[type="email"], input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Estilo del botón */
+        button {
+            background-color: #00BFA5;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00897B;
+        }
+
+        /* Efectos adicionales */
+        input:focus {
+            outline: none;
+            border-color: #00BFA5;
+            box-shadow: 0 0 5px rgba(0, 191, 165, 0.3);
+        }
+
+        /* Estilos para pantallas pequeñas */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+
+        /* Logo similar a Mercado Pago (Placeholder) */
+        .logo-placeholder {
+            width: 100px;
+            height: 50px;
+            background-color: #00BFA5;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    <h1>Generar pago</h1>
-    <form action="/crear-pago" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required>
-        <br>
-        <label for="monto">Monto:</label>
-        <input type="number" name="monto" required>
-        <br>
-        <button type="submit">Pagar</button>
-    </form>
+    <div class="container">
+        <div class="logo-placeholder"></div> <!-- Aquí podrías agregar un logo real si lo tuvieras -->
+        <h1>Generar Pago</h1>
+        <form action="/crear-pago" method="POST">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" name="email" placeholder="ejemplo@correo.com" required>
+
+            <label for="monto">Monto a Pagar:</label>
+            <input type="number" name="monto" placeholder="Ingresa el monto" required>
+
+            <button type="submit">Pagar</button>
+        </form>
+    </div>
 </body>
 </html>

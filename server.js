@@ -13,9 +13,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Configura el motor de plantillas EJS
 app.set('view engine', 'ejs');
 
-// Configura Mercado Pago con el token del archivo .env
+// Configura Mercado Pago con el token del archivo .env y habilita logs
 mercadopago.configure({
-    access_token: process.env.MERCADOPAGO_ACCESS_TOKEN
+    access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+    log: true // Habilitar logs para ver más detalles en caso de errores
 });
 
 // Ruta principal (home)
@@ -36,9 +37,9 @@ app.post('/crear-pago', async (req, res) => {
             }
         ],
         back_urls: {
-            success: 'http://localhost:3000/success',
-            failure: 'http://localhost:3000/failure',
-            pending: 'http://localhost:3000/pending'
+            success: 'http://localhost:' + process.env.PORT + '/success',
+            failure: 'http://localhost:' + process.env.PORT + '/failure',
+            pending: 'http://localhost:' + process.env.PORT + '/pending'
         },
         auto_return: 'approved',
         payer: {
@@ -71,8 +72,13 @@ app.get('/pending', (req, res) => {
 
 // Webhook para confirmar el pago y enviar correo
 app.post('/webhook', async (req, res) => {
-    const payment = req.query.payment_id;
-    
+    console.log('Datos recibidos en el webhook:', req.body); // Verifica qué datos está enviando Mercado Pago
+
+    const payment = req.body.data?.id; // Ajusta la obtención del payment_id si está en el body
+    if (!payment) {
+        return res.status(400).send('No se encontró el payment_id');
+    }
+
     try {
         const paymentInfo = await mercadopago.payment.findById(payment);
         if (paymentInfo.body.status === 'approved') {
@@ -114,7 +120,8 @@ const enviarEmail = (destinatario) => {
     });
 };
 
-// Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+// Iniciar el servidor en el puerto del archivo .env
+const PORT = process.env.PORT || 5224; // Usa el puerto desde el .env o 5224 por defecto
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
